@@ -16,7 +16,7 @@ const app = new Application()
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.use(({ response }: { response: Response }) => {
-    response.status = Status.NotFound.valueOf()
+    response.status = Status.NotFound
     response.body = {
         error: "not found",
     }
