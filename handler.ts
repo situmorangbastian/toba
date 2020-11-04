@@ -1,7 +1,10 @@
+// @ts-ignore
 import { Status } from "https://deno.land/std/http/http_status.ts"
 
-import { Router } from 'https://deno.land/x/oak@v4.0.0/mod.ts'
-import { Response } from 'https://deno.land/x/oak@v4.0.0/mod.ts'
+// @ts-ignore
+import { Router } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
+// @ts-ignore
+import { Response } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
 
 const router = new Router()
 
