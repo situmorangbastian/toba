@@ -1,6 +1,6 @@
 # TOBA
 
-Deno Boilerplate
+Boilerplate for REST API App with Deno
 
 ## Installation
 
