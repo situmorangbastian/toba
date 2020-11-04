@@ -1,9 +1,14 @@
+// @ts-ignore
 import { Status } from "https://deno.land/std/http/http_status.ts"
 
-import { Application } from 'https://deno.land/x/oak@v4.0.0/mod.ts'
-import { Response } from 'https://deno.land/x/oak@v4.0.0/mod.ts'
-import { config } from "https://deno.land/x/dotenv/mod.ts"
+// @ts-ignore
+import { Application } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
+// @ts-ignore
+import { Response } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
+// @ts-ignore
+import { config } from 'https://deno.land/x/dotenv@v1.0.1/mod.ts'
 
+// @ts-ignore
 import { router } from './handler.ts'
 
 const app = new Application()
@@ -11,7 +16,7 @@ const app = new Application()
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.use(({ response }: { response: Response }) => {
-    response.status = Status.BadRequest.valueOf()
+    response.status = Status.NotFound.valueOf()
     response.body = {
         error: "not found",
     }
@@ -20,4 +25,6 @@ app.use(({ response }: { response: Response }) => {
 const env = config()
 const PORT = parseInt(env.APP_PORT)
 console.log("Listening on: "+PORT)
+
+// @ts-ignore
 await app.listen({port: PORT})
