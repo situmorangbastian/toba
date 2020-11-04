@@ -10,7 +10,7 @@ const router = new Router()
 
 const fetch = async ({ response }: { response: Response }) => {
     response.body = []
-    response.status = Status.OK.valueOf()
+    response.status = Status.OK
 }
 
 router.get('/horas', (context) => {
