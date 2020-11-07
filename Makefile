@@ -2,7 +2,7 @@ lint:
 	deno lint --unstable
 
 run:
-	deno run --allow-read --allow-net --allow-write ./app.ts
+	deno run --allow-read --allow-net --allow-write app.ts
 
 docker:
 	docker build -t toba .
