@@ -1,12 +1,12 @@
 import { Status } from "https://deno.land/std/http/http_status.ts"
 
-import { Router, Response } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
+import { Router,  Context } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
 
 const router = new Router()
 
-const fetch = async ({ response }: { response: Response }) => {
-    response.body = []
-    response.status = Status.OK
+const fetch = async (ctx: Context) => {
+    ctx.response.body = []
+    ctx.response.status = Status.OK
 }
 
 router.get('/horas', (context) => {
