@@ -1,6 +1,6 @@
 import { Status } from "https://deno.land/std/http/http_status.ts"
 
-import { Application, Context } from 'https://deno.land/x/oak@v6.3.1/mod.ts'
+import { Application, Context } from 'https://deno.land/x/oak@v6.5.0/mod.ts'
 import { config } from 'https://deno.land/x/dotenv@v1.0.1/mod.ts'
 
 import { router } from './handler.ts'
