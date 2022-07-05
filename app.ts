@@ -1,23 +1,16 @@
-import { Status } from "https://deno.land/std@0.112.0/http/http_status.ts"
+import { HealthResource, DataResource, ErrorHandler } from "./handler.ts";
+import { config } from "https://deno.land/x/dotenv@v1.0.1/mod.ts";
+import * as Drash from "https://deno.land/x/drash@v2.7.0/mod.ts";
 
-import { Application, Context } from 'https://deno.land/x/oak@v6.5.0/mod.ts'
-import { config } from 'https://deno.land/x/dotenv@v1.0.1/mod.ts'
+const cfg = config();
+const server = new Drash.Server({
+  error_handler: ErrorHandler,
+  hostname: "localhost",
+  port: parseInt(cfg.APP_PORT),
+  protocol: "http",
+  resources: [HealthResource, DataResource],
+});
 
-import { router } from './handler.ts'
+server.run();
 
-const app = new Application()
-
-app.use(router.routes())
-app.use(router.allowedMethods())
-app.use((ctx: Context) => {
-    ctx.response.status = Status.NotFound
-    ctx.response.body = {
-        error: "not found",
-    }
-})
-
-const env = config()
-const PORT = parseInt(env.APP_PORT)
-console.log("Listening on: "+PORT)
-
-await app.listen({port: PORT})
+console.log(`Server running at ${server.address}`);

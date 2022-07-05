@@ -1,18 +1,50 @@
-import { Status } from "https://deno.land/std/http/http_status.ts"
+import * as Drash from "https://deno.land/x/drash@v2.7.0/mod.ts";
 
-import { Router,  Context } from 'https://deno.land/x/oak@v6.5.0/mod.ts'
+class HealthResource extends Drash.Resource {
+  public paths = ["/health"];
 
-const router = new Router()
-
-const fetch = (ctx: Context) => {
-    ctx.response.body = []
-    ctx.response.status = Status.OK
+  public GET(_request: Drash.Request, response: Drash.Response): void {
+    response.status = 200;
+    response.text("ok");
+    return;
+  }
 }
 
-router.get('/health', (context) => {
-	context.response.body = 'ok'
-    context.response.status = Status.OK
-})
-router.get('/data',fetch)
+class DataResource extends Drash.Resource {
+  public paths = ["/data"];
 
-export { router }
+  public GET(_request: Drash.Request, response: Drash.Response): void {
+    response.status = 200;
+    response.json([]);
+    return;
+  }
+}
+
+class ErrorHandler extends Drash.ErrorHandler {
+  public catch(
+    error: Error,
+    _request: Request,
+    response: Drash.Response
+  ): void {
+    // Handle all built-in Drash errors. This means any error that Drash
+    // throws internally will be handled in this block. This also means any
+    // resource that throws Drash.Errors.HttpError will be handled here.
+    if (error instanceof Drash.Errors.HttpError) {
+      response.status = error.code;
+      return response.json({
+        message: error.message.toLowerCase(),
+      });
+    }
+
+    // If the error is not of type Drash.Errors.HttpError, then default to a
+    // HTTP 500 error response. This is useful if you cannot ensure that
+    // third-party dependencies (e.g., some database dependency) will throw
+    // an error object that can be converted to an HTTP response.
+    response.status = 500;
+    return response.json({
+      message: "Server failed to process the request.",
+    });
+  }
+}
+
+export { HealthResource, DataResource, ErrorHandler };
