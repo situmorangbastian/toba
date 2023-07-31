@@ -18,6 +18,10 @@ To start APP, run:
 
 ## Running on Docker
 
-`make docker`
+### Start
 
-`make docker-run`
+`make docker-local-up`
+
+### Stop
+
+`make docker-local-down`
